@@ -204,5 +204,5 @@ if __name__ == "__main__":
     plt.grid(True)
 
     plt.tight_layout()
-    plt.savefig('cluster_experiment_plot.png', format='jpg', dpi=300)
+    plt.savefig('cluster_experiment_plot.png', format='png', dpi=300)
     plt.show()
