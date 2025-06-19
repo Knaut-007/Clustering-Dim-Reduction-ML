@@ -10,31 +10,31 @@ import time
 def load_data():
     # Load features
     feature_names = pd.read_csv(
-        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/features.txt', 
-        sep='\s+', 
-        header=None, 
+        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/features.txt',
+        sep=r'\s+',
+        header=None,
         usecols=[1]
     )[1].tolist()
-    
+
     # Load train and test data
     X_train = pd.read_csv(
-        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/train/X_train.txt', 
-        delim_whitespace=True, 
+        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/train/X_train.txt',
+        sep=r'\s+',
         header=None
     )
     y_train = pd.read_csv(
-        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/train/y_train.txt', 
-        delim_whitespace=True, 
+        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/train/y_train.txt',
+        sep=r'\s+',
         header=None
     )
     X_test = pd.read_csv(
-        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/test/X_test.txt', 
-        delim_whitespace=True, 
+        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/test/X_test.txt',
+        sep=r'\s+',
         header=None
     )
     y_test = pd.read_csv(
-        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/test/y_test.txt', 
-        delim_whitespace=True, 
+        'human+activity+recognition+using+smartphones/UCI HAR Dataset/UCI HAR Dataset/test/y_test.txt',
+        sep=r'\s+',
         header=None
     )
 
