@@ -172,11 +172,20 @@ def cluster_experiment(cluster_sizes, df_scaled, encoded_y):
 
         accuracies.append(accuracy)
         training_times.append(training_time)
+    return accuracies, training_times
 
 if __name__ == "__main__":
     cluster_sizes = [40, 50, 60]
     accuracies, training_times = cluster_experiment(cluster_sizes, df_scaled, encoded_y)
-
+    
+    # Save results to CSV
+    results_df = pd.DataFrame({
+        'n_clusters': cluster_sizes,
+        'accuracy': accuracies,
+        'training_time': training_times
+    })
+    results_df.to_csv('cluster_experiment_results.csv', index=False)
+    
     # Plotting
     plt.figure(figsize=(12, 5))
 

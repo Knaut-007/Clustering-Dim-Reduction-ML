@@ -202,3 +202,65 @@ If the dataset contained missing values, I would have considered the following a
   As the number of clusters (features) increases, accuracy may improve, but training time also increases. The goal is to find a balance, to retain most of the predictive power while reducing computational cost.
 - **Dimensionality Reduction Effectiveness:**  
   If accuracy remains high with fewer features, it means the clustering approach successfully removed redundant or irrelevant features.
+
+## Experiment Results and Interpretation
+
+### Results Table
+
+| Model                        | Accuracy | Training Time (s) | Number of Features |
+|------------------------------|----------|-------------------|--------------------|
+| Baseline (All Features)      | 0.7461   | 0.1155            | 561                |
+| Reduced (K-Means, 50 feats.) | 0.8320   | 0.0070            | 50                 |
+
+### Plots
+
+- The "Accuracy vs Number of Clusters" plot shows that accuracy increases as the number of clusters/features increases, then plateaus(decreases slightly maybe due to noise).
+- The "Training Time vs Number of Clusters" plot shows that training time increases with the number of features, but is always much lower than using all features.
+
+### Why Do Results Change Each Run?
+
+Primary Source - https://stackoverflow.com/questions/45004003/why-do-k-means-clustering-different-results-everytime
+
+K-Means clustering and random feature selection both involve randomness:
+- **K-Means Initialization:** The initial cluster centroids are chosen randomly each time you run the algorithm, which can lead to different clusters and thus different representative features being selected.
+- **Random Feature Selection:** When selecting a representative feature from each cluster, you use `np.random.choice`, which also introduces randomness.
+- **Train-Test Split:** If you do not set a fixed `random_state` in `train_test_split`, the split will be different each run, affecting results.
+
+Because of these sources of randomness, running the program multiple times can give slightly different accuracy and training time values. This is a normal property of stochastic machine learning algorithms and clustering methods. For reproducible results, fix the random seed for all random processes.
+
+### What Do the Results Mean?
+
+- **Baseline Model:** Uses all 561 features and achieves 0.7461 accuracy with a training time of 0.1155 seconds.
+- **Reduced Model (K-Means, 50 features):** Achieves higher accuracy (0.8320) with only 50 features and a training time of 0.0070 seconds.
+- **Interpretation:** This shows that many features in the original dataset are redundant or irrelevant. Clustering features and selecting one from each cluster retains the most informative features and remove noise, which can even improve accuracy and greatly speed up training.
+
+### What Do the Plots Show?
+
+- **Accuracy vs Number of Clusters:**  
+  As the number of clusters (features) increases, accuracy improves and then stabilizes. This is expected because more features provide more information, but after a point, adding more features yields diminishing returns.
+- **Training Time vs Number of Clusters:**  
+  Training time increases with the number of features, but is always much lower than the baseline with all features. This demonstrates the efficiency gained through dimensionality reduction.
+
+### What I Learned
+
+- **Clustering for Dimensionality Reduction:**  
+  Clustering features is an effective way to reduce dimensionality, especially in high-dimensional datasets with many redundant features.
+- **Randomness in ML Experiments:**  
+  Many ML algorithms, especially clustering, are stochastic and can yield different results on different runs unless the random seed is fixed. This is not a bug but a property of the algorithms.
+- **Efficiency and Performance:**  
+  Reducing the number of features can dramatically speed up model training and sometimes even improve accuracy by removing irrelevant or noisy features.
+- **Visualization and Analysis:**  
+  Plotting metrics like accuracy and training time against the number of features provides valuable insight into the trade-offs of dimensionality reduction.
+
+### Practical Implications
+
+- **Feature reduction is essential** for efficient and interpretable machine learning, especially in domains like sensor data, genomics, or text where feature sets are large.
+- **Clustering-based selection** is a simple, scalable, and effective approach for feature selection without needing target labels.
+- **Always be aware of randomness** in your experiments and consider fixing seeds for reproducibility when needed.
+
+### Why Clustering and Dimensionality Reduction Matter
+
+- Clustering helps uncover hidden patterns and groups similar features, making data easier to analyze and models faster to train.
+- Dimensionality reduction combats the "curse of dimensionality," reduces overfitting, and improves computational efficiency.
+
+*Note: If you require strictly reproducible results, set a fixed random seed for all random operations (KMeans, np.random, and train_test_split).*
