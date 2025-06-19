@@ -161,3 +161,21 @@ If the dataset contained missing values, I would have considered the following a
   Many features are likely redundant. Clustering helps keep only the most informative, non-redundant features.
 - **Why select one feature per cluster?**  
   This ensures diversity in the reduced feature set and avoids information loss from using only highly similar features.
+
+## 7. Training and Evaluating Model on Reduced Features
+
+### Code Explanation
+
+- **Train-test split:**  
+  The reduced feature set is split into training and testing sets, just like before.
+- **Gaussian Naive Bayes:**  
+  The same classifier is trained and evaluated, but now using only the selected representative features from K-Means clustering.
+- **Performance Comparison:**  
+  Print the accuracy, training time, and number of features used for the reduced model.
+
+### Theoretical Notes
+
+- **Why repeat the split?**  
+  To ensure a fair comparison, the same random split and labels are used.
+- **What to expect?**  
+  The reduced model should be faster to train and may have similar accuracy if redundant features were successfully removed.

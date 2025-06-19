@@ -112,3 +112,25 @@ selected_features_indices = [
     for i in range(n_clusters)
 ]
 selected_features = df_scaled[:, selected_features_indices]
+
+# Split Data with Reduced Features 
+X_train_reduced, X_test_reduced, y_train, y_test = train_test_split(
+    selected_features, encoded_y, test_size=0.2, random_state=42
+)
+
+# Train Gaussian Naive Bayes on Reduced Features 
+start_time = time.time()
+classifier_pipeline_reduced = Pipeline([
+    ('classifier', GaussianNB())
+])
+classifier_pipeline_reduced.fit(X_train_reduced, y_train)
+y_pred_reduced = classifier_pipeline_reduced.predict(X_test_reduced)
+end_time = time.time()
+
+reduced_features_time = end_time - start_time
+accuracy_reduced = accuracy_score(y_test, y_pred_reduced)
+
+print(f"\nModel with Reduced Features (K-Means):")
+print(f"Accuracy: {accuracy_reduced:.4f}")
+print(f"Training Time: {reduced_features_time:.4f} seconds")
+print(f"Number of Features: {n_clusters}")
