@@ -64,3 +64,14 @@ print(df.isnull().sum().sum())  # Total missing values
 # Print class distribution
 print("\nClass distribution:")
 print(y.value_counts())
+
+
+# Encode Class Labels 
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+
+label_encoder = LabelEncoder()
+encoded_y = label_encoder.fit_transform(y)
+
+# Scale Features 
+scaler = StandardScaler()
+df_scaled = scaler.fit_transform(df)

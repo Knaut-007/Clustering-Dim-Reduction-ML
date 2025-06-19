@@ -108,3 +108,19 @@ If the dataset contained missing values, I would have considered the following a
   Sometimes, I might add a binary indicator column to flag which values were missing, so the model can learn if missingness itself is informative.
 
 **In this project, no missing values were found, so no imputation or removal was necessary.**
+
+## 4. Label Encoding and Feature Scaling
+
+### Code Explanation
+
+- **Label Encoding:**  
+  Many machine learning models require numeric labels. `LabelEncoder` converts the activity labels (which may be strings or integers) into a contiguous range of integers (0, 1, 2, ...).
+- **Feature Scaling:**  
+  Sensor features have different units and scales. `StandardScaler` standardizes each feature to have mean 0 and standard deviation 1. This is crucial for clustering and many ML algorithms, as it ensures all features contribute equally.
+
+### Theoretical Notes
+
+- **Why encode labels?**  
+  Algorithms like Naive Bayes require numeric target variables.
+- **Why scale features?**  
+  K-Means clustering and Naive Bayes are sensitive to feature scales. Standardizing prevents features with larger ranges from dominating the model.
