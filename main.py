@@ -75,3 +75,27 @@ encoded_y = label_encoder.fit_transform(y)
 # Scale Features 
 scaler = StandardScaler()
 df_scaled = scaler.fit_transform(df)
+
+from sklearn.naive_bayes import GaussianNB
+
+# Split Data 
+X_train_full, X_test_full, y_train, y_test = train_test_split(
+    df_scaled, encoded_y, test_size=0.2, random_state=42
+)
+
+# Baseline Model: Gaussian Naive Bayes with All Features
+start_time = time.time()
+classifier_pipeline_full = Pipeline([
+    ('classifier', GaussianNB())
+])
+classifier_pipeline_full.fit(X_train_full, y_train)
+y_pred_full = classifier_pipeline_full.predict(X_test_full)
+end_time = time.time()
+
+full_features_time = end_time - start_time
+accuracy_full = accuracy_score(y_test, y_pred_full)
+
+print(f"\nBaseline Model (All Features):")
+print(f"Accuracy: {accuracy_full:.4f}")
+print(f"Training Time: {full_features_time:.4f} seconds")
+print(f"Number of Features: {X_train_full.shape[1]}")

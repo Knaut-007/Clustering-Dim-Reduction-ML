@@ -124,3 +124,21 @@ If the dataset contained missing values, I would have considered the following a
   Algorithms like Naive Bayes require numeric target variables.
 - **Why scale features?**  
   K-Means clustering and Naive Bayes are sensitive to feature scales. Standardizing prevents features with larger ranges from dominating the model.
+
+## 5. Train-Test Split and Baseline Model
+
+### Code Explanation
+
+- **Train-Test Split:**  
+  The dataset is split into training (80%) and testing (20%) sets using `train_test_split`. This allows us to evaluate model performance on unseen data.
+- **Baseline Model:**  
+  We use a `GaussianNB` (Gaussian Naive Bayes) classifier as a baseline. The model is trained on all 561 features.
+- **Pipeline:**  
+  The pipeline structure allows easy swapping or adding of preprocessing/modeling steps.
+
+### Theoretical Notes
+
+- **Why split the data?**  
+  To evaluate how well the model generalizes to new, unseen samples.
+- **Why use a baseline model?**  
+  The baseline provides a reference point to compare the effectiveness of dimensionality reduction and feature selection later.
