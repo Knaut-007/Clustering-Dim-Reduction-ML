@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
-from sklearn.cluster import KMeans 
 import time
 
 def load_data():
@@ -99,3 +98,17 @@ print(f"\nBaseline Model (All Features):")
 print(f"Accuracy: {accuracy_full:.4f}")
 print(f"Training Time: {full_features_time:.4f} seconds")
 print(f"Number of Features: {X_train_full.shape[1]}")
+
+from sklearn.cluster import KMeans
+
+# K-Means Clustering for Dimensionality Reduction
+n_clusters = 50  # You can vary this later (e.g., 40, 50, 60)
+kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+kmeans.fit(df_scaled.T)  # Transpose: features become data points
+
+# Select one representative feature per cluster
+selected_features_indices = [
+    np.random.choice(np.where(kmeans.labels_ == i)[0])
+    for i in range(n_clusters)
+]
+selected_features = df_scaled[:, selected_features_indices]

@@ -132,7 +132,7 @@ If the dataset contained missing values, I would have considered the following a
 - **Train-Test Split:**  
   The dataset is split into training (80%) and testing (20%) sets using `train_test_split`. This allows us to evaluate model performance on unseen data.
 - **Baseline Model:**  
-  We use a `GaussianNB` (Gaussian Naive Bayes) classifier as a baseline. The model is trained on all 561 features.
+  Used a `GaussianNB` (Gaussian Naive Bayes) classifier as a baseline. The model is trained on all 561 features.
 - **Pipeline:**  
   The pipeline structure allows easy swapping or adding of preprocessing/modeling steps.
 
@@ -142,3 +142,22 @@ If the dataset contained missing values, I would have considered the following a
   To evaluate how well the model generalizes to new, unseen samples.
 - **Why use a baseline model?**  
   The baseline provides a reference point to compare the effectiveness of dimensionality reduction and feature selection later.
+
+## 6. K-Means Clustering for Dimensionality Reduction
+
+### Code Explanation
+
+- **Transposing the Data:**  
+  By transposing the feature matrix, each feature (column) becomes a "data point" for clustering.  
+  This allows grouping similar features together based on their values across all samples.
+- **K-Means Clustering:**  
+  Clusters the features into `n_clusters` groups. Each cluster contains similar features (highly correlated or redundant).
+- **Selecting Representative Features:**  
+  For each cluster, select one feature (randomly) to represent the group, reducing the total number of features.
+
+### Theoretical Notes
+
+- **Why cluster features?**  
+  Many features are likely redundant. Clustering helps keep only the most informative, non-redundant features.
+- **Why select one feature per cluster?**  
+  This ensures diversity in the reduced feature set and avoids information loss from using only highly similar features.
