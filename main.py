@@ -43,3 +43,24 @@ def load_data():
     y = pd.concat([y_train, y_test], ignore_index=True).iloc[:,0]
     X.columns = feature_names
     return X, y
+
+df, y = load_data()
+
+# Exploratory Data Analysis (EDA)
+
+# Print dataset shape and first few rows
+print("Dataset shape:", df.shape)
+print("First 5 rows:")
+print(df.head())
+
+# Print basic statistics
+print("\nDescriptive statistics:")
+print(df.describe())
+
+# Check for missing values
+print("\nMissing values per column:")
+print(df.isnull().sum().sum())  # Total missing values
+
+# Print class distribution
+print("\nClass distribution:")
+print(y.value_counts())

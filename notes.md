@@ -72,3 +72,39 @@ This ensures imports are resolved relative to the project root, not the test fol
 This file tells Python to treat the `test` directory as a package, which is required for module-based imports (such as `python -m test.test_data_loading`).  
 Without `__init__.py`, Python cannot recognize the `test` folder as a valid module, and running tests with the `-m` flag may fail.
 
+## 3. Exploratory Data Analysis (EDA)
+
+### Code and Output
+
+- **Dataset shape:** Shows the number of samples and features (should be [10299, 561]).
+- **First rows:** Helps verify data format and feature names.
+- **Descriptive statistics:** Gives an overview of value ranges and distributions for each feature.
+- **Missing values:** Checks for any NaNs or incomplete data.
+- **Class distribution:** Shows the number of samples per activity, indicating if the dataset is balanced.
+
+### Theoretical Notes
+
+- **Why EDA?**  
+  EDA helps to understand the structure, quality, and distribution of the data before modeling. It’s crucial for identifying issues like missing values, outliers, or class imbalance.
+- **Findings?**  
+  - The dataset has 561 features and over 10,000 samples.
+  - There are no missing values.
+  - The class distribution is fairly balanced across activities.
+
+### What if There Were Missing Values?
+
+If the dataset contained missing values, I would have considered the following approaches:
+
+- **Removal:**  
+  If only a small number of rows or columns had missing values, I could remove those rows or columns using `dropna()`. This is only advisable if the data loss is minimal and does not bias the dataset.
+
+- **Imputation:**  
+  For more substantial missing data, I would impute (fill in) the missing values. Common strategies include:
+    - **Mean/Median Imputation:** Replace missing values with the mean or median of the respective feature.
+    - **Mode Imputation:** For categorical features, replace missing values with the most frequent value.
+    - **Advanced Methods:** Use algorithms like KNN imputation or regression imputation for more accurate estimates.
+
+- **Indicator Variable:**  
+  Sometimes, I might add a binary indicator column to flag which values were missing, so the model can learn if missingness itself is informative.
+
+**In this project, no missing values were found, so no imputation or removal was necessary.**
