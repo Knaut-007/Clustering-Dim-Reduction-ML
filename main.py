@@ -99,9 +99,10 @@ print(f"Accuracy: {accuracy_full:.4f}")
 print(f"Training Time: {full_features_time:.4f} seconds")
 print(f"Number of Features: {X_train_full.shape[1]}")
 
+# K-Means Clustering for Dimensionality Reduction
+
 from sklearn.cluster import KMeans
 
-# K-Means Clustering for Dimensionality Reduction
 n_clusters = 50  # You can vary this later (e.g., 40, 50, 60)
 kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
 kmeans.fit(df_scaled.T)  # Transpose: features become data points
@@ -134,3 +135,64 @@ print(f"\nModel with Reduced Features (K-Means):")
 print(f"Accuracy: {accuracy_reduced:.4f}")
 print(f"Training Time: {reduced_features_time:.4f} seconds")
 print(f"Number of Features: {n_clusters}")
+
+
+# Comparing Results and Plotting
+
+import matplotlib.pyplot as plt
+
+# Test different cluster sizes
+
+def cluster_experiment(cluster_sizes, df_scaled, encoded_y):
+    accuracies = []
+    training_times = []
+
+    for n_clusters in cluster_sizes:
+        # K-Means clustering
+        kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+        kmeans.fit(df_scaled.T)
+
+        # Select representative features
+        selected_features_indices = [np.random.choice(np.where(kmeans.labels_ == i)[0]) for i in range(n_clusters)]
+        selected_features = df_scaled[:, selected_features_indices]
+
+        # Split data
+        X_train_reduced, X_test_reduced, y_train, y_test = train_test_split(selected_features, encoded_y, test_size=0.2, random_state=42)
+
+        # Train model
+        start_time = time.time()
+        classifier_pipeline_reduced = Pipeline([('classifier', GaussianNB())])
+        classifier_pipeline_reduced.fit(X_train_reduced, y_train)
+        y_pred_reduced = classifier_pipeline_reduced.predict(X_test_reduced)
+        end_time = time.time()
+
+        # Record accuracy and time
+        accuracy = accuracy_score(y_test, y_pred_reduced)
+        training_time = end_time - start_time
+
+        accuracies.append(accuracy)
+        training_times.append(training_time)
+
+if __name__ == "__main__":
+    cluster_sizes = [40, 50, 60]
+    accuracies, training_times = cluster_experiment(cluster_sizes, df_scaled, encoded_y)
+
+    # Plotting
+    plt.figure(figsize=(12, 5))
+
+    plt.subplot(1, 2, 1)
+    plt.plot(cluster_sizes, accuracies, marker='o')
+    plt.title('Accuracy vs Number of Clusters')
+    plt.xlabel('Number of Clusters')
+    plt.ylabel('Accuracy')
+    plt.grid(True)
+
+    plt.subplot(1, 2, 2)
+    plt.plot(cluster_sizes, training_times, marker='o', color='orange')
+    plt.title('Training Time vs Number of Clusters')
+    plt.xlabel('Number of Clusters')
+    plt.ylabel('Training Time (seconds)')
+    plt.grid(True)
+
+    plt.tight_layout()
+    plt.show()

@@ -40,9 +40,9 @@ return X, y
 ### Theoretical Understanding
 
 - **Why combine train and test?**  
-  For exploratory data analysis (EDA) and feature clustering, we want to analyze the entire dataset together. This helps us understand the full feature space and redundancy.
+  For exploratory data analysis (EDA) and feature clustering, to analyze the entire dataset together. This helps us understand the full feature space and redundancy.
 - **Why use `sep='\s+'`?**  
-  The `features.txt` is space-separated, and sometimes the number of spaces varies. Using `\s+` (regex for one or more whitespace) ensures we correctly extract columns.
+  The `features.txt` is space-separated, and sometimes the number of spaces varies. Using `\s+` (regex for one or more whitespace) ensures to correctly extract columns.
 - **Why assign feature names?**  
   Assigning the correct feature names to the columns makes the data easier to interpret and process in later steps.
 
@@ -50,7 +50,7 @@ return X, y
 
 ## **2. Data Loading Test**
 
-- We want to verify that the data loads correctly and has the expected shape and feature names.
+- To verify that the data loads correctly and has the expected shape and feature names.
 
 ### Notes on Pandas Warnings
 
@@ -179,3 +179,26 @@ If the dataset contained missing values, I would have considered the following a
   To ensure a fair comparison, the same random split and labels are used.
 - **What to expect?**  
   The reduced model should be faster to train and may have similar accuracy if redundant features were successfully removed.
+
+## 8. Experiment: Varying Number of Clusters
+
+### Code Explanation
+
+- **Experiment:**  
+  Repeat the K-Means dimensionality reduction and model training for different numbers of clusters (40, 50, 60).
+- **Metrics Recorded:**  
+  For each cluster size, record the model’s accuracy and training time.
+
+### Results
+
+- **Accuracy vs. Number of Clusters:**  
+  The plot shows how model accuracy changes by varying the number of selected features.
+- **Training Time vs. Number of Clusters:**  
+  The plot illustrates the effect of feature reduction on model training speed.
+
+### Interpretation
+
+- **Trade-off:**  
+  As the number of clusters (features) increases, accuracy may improve, but training time also increases. The goal is to find a balance, to retain most of the predictive power while reducing computational cost.
+- **Dimensionality Reduction Effectiveness:**  
+  If accuracy remains high with fewer features, it means the clustering approach successfully removed redundant or irrelevant features.
